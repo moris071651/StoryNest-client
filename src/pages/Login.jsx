@@ -5,7 +5,7 @@ import axios from "axios";
 
 const API = "http://localhost:8000/api/v1";
 
-export default function Login() {
+export default function Login({ setIsLoggedIn }) {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ export default function Login() {
       const res = await axios.post(`${API}/auth/${endpoint}`, form, {
         withCredentials: true,
       });
-      console.log("User logged in:", res.data);
+      setIsLoggedIn(true);
       navigate("/dashboard");
     } catch (err) {
       alert("Authentication failed.");
@@ -56,9 +56,6 @@ export default function Login() {
           </button>
           <button className="btn btn-success" onClick={() => handleAuth("login")}>
             Log In
-          </button>
-          <button className="btn btn-success" onClick={() => handleAuth("logout")}>
-            Log out
           </button>
         </div>
       </div>

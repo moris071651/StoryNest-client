@@ -5,7 +5,7 @@ import StoryList from "../components/StoryList";
 
 const API = "http://localhost:8000/api/v1";
 
-export default function Dashboard() {
+export default function Dashboard({ isLoggedIn }) {
   const [stories, setStories] = useState([]);
   const navigate = useNavigate();
 
@@ -26,9 +26,13 @@ export default function Dashboard() {
     <div className="container my-4" style={{ fontFamily: "sans-serif" }}>
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1>Public Stories</h1>
-        <button className="btn btn-primary" onClick={() => navigate("/create")}>
+        { isLoggedIn ? (
+          <button className="btn btn-primary" onClick={() => navigate("/create")}>
           Create a Story
-        </button>
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
       <StoryList stories={stories} setStories={setStories} isMe={false} />
     </div>

@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const API = "http://localhost:8000/api/v1";
 
-export default function Header({ user }) {
+export default function Header({ isLoggedIn, setIsLoggedIn }) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -13,6 +13,7 @@ export default function Header({ user }) {
       await axios.post(`${API}/auth/logout`, null, {
         withCredentials: true,
       });
+      setIsLoggedIn(false);
       navigate("/");
     } catch (err) {
       alert("Logout failed. Please try again.");
@@ -30,7 +31,7 @@ export default function Header({ user }) {
           StoryNest
         </span>
         <div className="d-flex gap-2">
-          {!user ? (
+          {!isLoggedIn ? (
             <button className="btn btn-outline-primary" onClick={() => navigate("/login")}>
               Login / Signup
             </button>

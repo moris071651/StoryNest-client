@@ -32,24 +32,22 @@ function App() {
   return (
     <>
       <Router>
-        <Header user={isLoggedIn}/>
+        <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
         <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Dashboard isLoggedIn={isLoggedIn}/>} />
+        <Route path="/story/:id" element={<ReadStory />} />
+        <Route path="/users/:id" element={<UserPage />} />
 
         {isLoggedIn ? (
           <>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/story/:id" element={<ReadStory />} />
-          {/* <Route path="/story/:id" element={<ReadStory />} /> */}
+            <Route path="/dashboard" element={<Dashboard isLoggedIn={isLoggedIn}/>} />
             <Route path="/edit/:id" element={<EditStory />} />
-
             <Route path="/create" element={<CreateStory />} />
-            <Route path="/users/:id" element={<UserPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </>
           ) : (
           <>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn}/>} />
             <Route path="*" element={<Navigate to="/" />} />
           </>
           )
